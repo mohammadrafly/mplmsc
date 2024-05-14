@@ -21,4 +21,9 @@ class Jadwal extends Model
     {
         return $this->belongsTo(ListLink::class, 'id', 'id_jadwal');
     }
+
+    public function ListPJ()
+    {
+        return $this->belongsTo(ListPJ::class, 'id', 'id_jadwal');
+    }
 }

@@ -11,4 +11,9 @@ class Notifikasi extends Model
 
     protected $guarded = [];
     protected $table = 'notifikasi';
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal', 'id');
+    }
 }

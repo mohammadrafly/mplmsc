@@ -103,17 +103,17 @@ export default function UpdateProfile({ title, data, urlFoto, role }) {
                             <input type="file" id="photo" onChange={handlePhotoChange} className="hidden" />
                         </label>
                     </div>
-                    <div className='mb-5'>
+                    <div className='flex flex-col mb-5'>
                         <label htmlFor="name">Name</label>
-                        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className='rounded-lg py-2 px-4 bg-gray-200 w-full'/>
+                        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className='border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#1858ac] focus:border-transparent'/>
                     </div>
                     {role !== "mahasiswa" && (
-                        <div className='mb-5'>
+                        <div className='flex flex-col mb-5'>
                             <label htmlFor="email">Email</label>
-                            <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className='rounded-lg py-2 px-4 bg-gray-200 w-full'/>
+                            <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className='border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#1858ac] focus:border-transparent'/>
                         </div>
                     )}
-                    <button type="submit" className="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg">
+                    <button type="submit" className="bg-yellow-400 text-white font-bold py-2 px-4 rounded-lg">
                         Simpan
                     </button>
                 </form>

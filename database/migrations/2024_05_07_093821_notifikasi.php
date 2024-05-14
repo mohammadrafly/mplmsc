@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_jadwal');
             $table->string('id_user');
+            $table->string('message');
             $table->enum('read', [true, false]);
             $table->timestamps();
         });

@@ -118,7 +118,7 @@ export default function UpdatePassword({ title }) {
                     <div className='mb-5'>
                         <label htmlFor="password">Password Lama</label>
                         <div className="relative">
-                            <input type={showPassword ? "text" : "password"} id="old_password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className='rounded-lg py-2 px-4 bg-gray-200 w-full'/>
+                            <input type={showPassword ? "text" : "password"} id="old_password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className='border border-gray-300 rounded-lg py-2 px-4 w-full'/>
                             <button type="button" onClick={togglePasswordVisibility} className="absolute top-1/2 right-4 transform -translate-y-1/2">
                                 {showPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -136,7 +136,7 @@ export default function UpdatePassword({ title }) {
                     <div className='mb-5'>
                         <label htmlFor="new_password">Password Baru</label>
                         <div className="relative">
-                            <input type={showNewPassword ? "text" : "password"} id="new_password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className='rounded-lg py-2 px-4 bg-gray-200 w-full'/>
+                            <input type={showNewPassword ? "text" : "password"} id="new_password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className='border border-gray-300 rounded-lg py-2 px-4 w-full'/>
                             <button type="button" onClick={toggleNewPasswordVisibility} className="absolute top-1/2 right-4 transform -translate-y-1/2">
                                 {showNewPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -154,7 +154,7 @@ export default function UpdatePassword({ title }) {
                     <div className='mb-5'>
                         <label htmlFor="confirm_new_password">Konfirmasi Password Baru</label>
                         <div className="relative">
-                            <input type={showConfirmPassword ? "text" : "password"} id="confirm_new_password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className='rounded-lg py-2 px-4 bg-gray-200 w-full'/>
+                            <input type={showConfirmPassword ? "text" : "password"} id="confirm_new_password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className='border border-gray-300 rounded-lg py-2 px-4 w-full'/>
                             <button type="button" onClick={toggleConfirmPasswordVisibility} className="absolute top-1/2 right-4 transform -translate-y-1/2">
                                 {showConfirmPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -169,7 +169,7 @@ export default function UpdatePassword({ title }) {
                             </button>
                         </div>
                     </div>
-                    <button type="submit" className="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg">
+                    <button type="submit" className="bg-yellow-400 text-white font-bold py-2 px-4 rounded-lg">
                         Simpan
                     </button>
                 </form>

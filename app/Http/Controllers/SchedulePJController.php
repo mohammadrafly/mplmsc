@@ -11,11 +11,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class ScheduleController extends Controller
+class SchedulePJController extends Controller
 {
     public function schedule()
     {
-        return Inertia::render('Dashboard/Schedule/Schedule', [
+        return Inertia::render('Dashboard/PJ/Schedule', [
             'title' => 'Angkatan',
             'data' => Jadwal::all()->groupBy('tahun'),
         ]);
@@ -23,16 +23,21 @@ class ScheduleController extends Controller
 
     public function scheduleByYears($year)
     {
-        return Inertia::render('Dashboard/Schedule/ScheduleByYear', [
+        return Inertia::render('Dashboard/PJ/ScheduleByYear', [
             'title' => "Schedule {$year}",
-            'data' => Jadwal::with('ListPJ')->where('tahun', $year)->get(),
+            'data' => ListPJ::with('jadwal')
+                ->where('id_mahasiswa', Auth::user()->id)
+                ->whereHas('jadwal', function($query) use ($year) {
+                    $query->where('tahun', $year);
+                })
+                ->get(),
         ]);
     }
-
+    
     public function scheduleByID(Request $request, $year, $id)
     {
         $jadwal = Jadwal::find($id);
-
+        
         if (!$jadwal) {
             return response()->json([
                 'message' => 'Jadwal not found', 
@@ -49,7 +54,7 @@ class ScheduleController extends Controller
                     'code' => 404
                 ]);
             }
-    
+
             $users = User::all();
             foreach ($users as $user) {
                 Notifikasi::insert([
@@ -59,14 +64,14 @@ class ScheduleController extends Controller
                     'read' => '',
                 ]);
             }
-
+    
             return response()->json([
                 'message' => 'Berhasil update jadwal', 
                 'code' => 200
             ]);
         }
     
-        return Inertia::render('Dashboard/Schedule/ScheduleByID', [
+        return Inertia::render('Dashboard/PJ/ScheduleByID', [
             'title' => $jadwal->nama_jadwal,
             'data' => Jadwal::with('user')->find($id),
             'auth' => Jadwal::where('id', $jadwal->id)->where('dosen', Auth::user()->id)->first(),
@@ -77,14 +82,15 @@ class ScheduleController extends Controller
     public function scheduleSetting($year, $id)
     {
         $jadwal = Jadwal::find($id);
-
+                
         if (!$jadwal) {
             return response()->json([
                 'message' => 'Jadwal not found', 
                 'code' => 404
             ]);
         }
-        return Inertia::render('Dashboard/Schedule/SettingSchedule', [
+
+        return Inertia::render('Dashboard/PJ/SettingSchedule', [
             'title' => $jadwal->nama_jadwal,
             'data' => Jadwal::with('user')->find($id),
             'buktiPerkuliahan' => ListLink::where('id_jadwal', $id)->where('type', 'bukti_perkuliahan')->first(),
@@ -98,13 +104,14 @@ class ScheduleController extends Controller
     public function scheduleUpdate(Request $request, $year, $id)
     {
         $jadwal = Jadwal::find($id);
-
+                
         if (!$jadwal) {
             return response()->json([
                 'message' => 'Jadwal not found', 
                 'code' => 404
             ]);
         }
+
         if ($request->isMethod('POST')) {
             $update = $jadwal->update([
                 'hari' => $request->input('hari'),
@@ -135,7 +142,7 @@ class ScheduleController extends Controller
             ]);
         }
 
-        return Inertia::render('Dashboard/Schedule/UpdateSchedule', [
+        return Inertia::render('Dashboard/PJ/UpdateSchedule', [
             'title' => $jadwal->nama_jadwal,
             'data' => Jadwal::with('user')->find($id),
         ]);

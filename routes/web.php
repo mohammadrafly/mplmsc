@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SchedulePJController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function() {
@@ -21,7 +22,7 @@ Route::middleware('auth')->group(function() {
         });
         Route::prefix('notification')->group(function() {
             Route::controller(NotificationController::class)->group(function() {
-                Route::get('/', 'index')->name('notification');
+                Route::match(['GET', 'POST'], '/', 'index')->name('notification');
             });
         });
         Route::prefix('profile')->group(function() {
@@ -46,7 +47,16 @@ Route::middleware('auth')->group(function() {
                 Route::get('year/{year}', 'scheduleByYears')->name('schedule.year');
                 Route::match(['GET', 'POST'], 'year/{year}/single/{id}', 'scheduleByID')->name('schedule.single');
                 Route::get('year/{year}/single/{id}/setting', 'scheduleSetting')->name('schedule.setting');
-                Route::get('year/{year}/single/{id}/setting/update', 'scheduleUpdate')->name('schedule.update');
+                Route::match(['GET', 'POST'], 'year/{year}/single/{id}/setting/update', 'scheduleUpdate')->name('schedule.update');
+            });
+        });
+        Route::prefix('schedule/pj')->group(function() {
+            Route::controller(SchedulePJController::class)->group(function() {
+                Route::get('/', 'schedule')->name('schedule');
+                Route::get('year/{year}', 'scheduleByYears')->name('schedule.year');
+                Route::match(['GET', 'POST'], 'year/{year}/single/{id}', 'scheduleByID')->name('schedule.single');
+                Route::get('year/{year}/single/{id}/setting', 'scheduleSetting')->name('schedule.setting');
+                Route::match(['GET', 'POST'], 'year/{year}/single/{id}/setting/update', 'scheduleUpdate')->name('schedule.update');
             });
         });
     });

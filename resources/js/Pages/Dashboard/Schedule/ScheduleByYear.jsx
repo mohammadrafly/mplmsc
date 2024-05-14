@@ -2,13 +2,22 @@ import Layout from '../../Layout';
 import React from 'react';
 import { Link } from '@inertiajs/react';
 
-export default function ScheduleByYear({ title, data }) {
-    console.log(data);
+export default function ScheduleByYear({ title, data, hasPJ }) {
+    console.log(hasPJ);
+    const handleGoBack = () => {
+        window.history.back();
+    };
+
     return (
         <Layout>
             <div className='animate-slide-bottom-to-top p-5'>
-                <div className='uppercase text-center bg-[#1858ac] rounded-lg px-7 py-5 text-white font-bold text-xl flex justify-center items-center'>
+                <div className='uppercase text-center bg-[#1858ac] rounded-lg px-7 py-5 text-white font-bold text-xl flex justify-between items-center'>
                     {title}
+                    <button type="button" onClick={handleGoBack} className="ml-4 p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
                 </div>
                 <div className="mt-5 py-5">
                     {data.map((item, index) => (

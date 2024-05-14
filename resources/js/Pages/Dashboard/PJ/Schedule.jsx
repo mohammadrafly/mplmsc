@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 
 export default function Schedule({ title, data }) {
+    console.log(data)
     const handleGoBack = () => {
         window.history.back();
     };
@@ -21,7 +22,7 @@ export default function Schedule({ title, data }) {
                 <div className="mt-5 py-5">
                     {Object.entries(data).map(([tahun, jadwals]) => (
                         <Link
-                            href={`schedule/year/${tahun}`}
+                            href={`pj/year/${tahun}`}
                             key={tahun}
                             className="mb-4 flex justify-between items-center"
                         >
