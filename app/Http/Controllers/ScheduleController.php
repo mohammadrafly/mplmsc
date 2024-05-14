@@ -57,6 +57,7 @@ class ScheduleController extends Controller
                     'id_user' => $user->id,
                     'message' => "Mata kuliah $jadwal->nama_jadwal dilaksanakan secara $request->koneksi",
                     'read' => '',
+                    'created_at' => now()
                 ]);
             }
 
@@ -126,6 +127,7 @@ class ScheduleController extends Controller
                     'id_user' => $user->id,
                     'message' => "Update informasi baru pada mata kuliah $jadwal->nama_jadwal",
                     'read' => '',
+                    'created_at' => now()
                 ]);
             }
     

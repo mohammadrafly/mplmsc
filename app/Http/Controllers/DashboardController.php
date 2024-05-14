@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -12,7 +13,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard/Index', [
             'title' => 'Dashboard',
-            'user' => User::find(Auth::user()->id)
+            'user' => User::find(Auth::user()->id),
         ]);
     }
 }

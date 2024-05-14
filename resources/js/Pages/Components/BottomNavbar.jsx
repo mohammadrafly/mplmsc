@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 
-export default function BottomNavbar({ url }) {
+export default function BottomNavbar({ url, hasNotification }) {
     return (
         <div className='w-full fixed bottom-0 h-[75px] bg-[#043474]'>
             <div className='flex text-white justify-between items-center h-full px-10'>

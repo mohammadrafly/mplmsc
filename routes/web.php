@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function() {
         Route::prefix('notification')->group(function() {
             Route::controller(NotificationController::class)->group(function() {
                 Route::match(['GET', 'POST'], '/', 'index')->name('notification');
+                Route::match(['GET'], 'get', 'getNotification')->name('notification.get');
             });
         });
         Route::prefix('profile')->group(function() {

@@ -41,4 +41,11 @@ class NotificationController extends Controller
             'data' => Notifikasi::with('jadwal')->where('id_user', Auth::user()->id)->get(),
         ]);
     }
+
+    public function getNotification()
+    {
+        return response()->json([
+            'notifikasi' => Notifikasi::where('id_user', Auth::user()->id)->where('read', '')->get(),
+        ]);
+    }    
 }

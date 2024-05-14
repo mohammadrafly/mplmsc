@@ -56,6 +56,23 @@ export default function Notification({ title, data }) {
         }
     };
 
+    // Group notifications by date and sort them based on proximity to the current date
+    const groupedNotifications = Object.entries(notifications.reduce((acc, notification) => {
+        const dateTime = new Date(notification.created_at);
+        const date = dateTime.toLocaleDateString('id-ID');
+        const time = dateTime.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        if (!acc[date]) {
+            acc[date] = [];
+        }
+        acc[date].push({ ...notification, time }); // Add time to each notification
+        return acc;
+    }, {})).sort((a, b) => {
+        const aDate = new Date(a[0]).getTime();
+        const bDate = new Date(b[0]).getTime();
+        const currentDate = new Date().getTime();
+        return Math.abs(aDate - currentDate) - Math.abs(bDate - currentDate);
+    });
+
     return (
         <Layout>
             <div className='animate-slide-bottom-to-top p-5'>
@@ -63,26 +80,32 @@ export default function Notification({ title, data }) {
                     {title}
                 </div>
                 <div className='mt-5'>
-                {notifications.map((notif, index) => (
-                    <div key={index} onClick={() => handleSetAsRead(notif.id, index)} className={`bg-gray-200 rounded-lg p-4 mb-4 flex justify-between items-center gap-5`}>
-                        <div className={`${notif.read === '1' ? 'text-gray-500' : 'text-black'}`}>
-                            {notif.read === '1' ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                                </svg>
-                            ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
-                                </svg>
-                            )}
+                    {groupedNotifications.map(([date, notifications]) => (
+                        <div key={date}>
+                            <h2 className="text-lg font-semibold mt-4">{date}</h2>
+                            {notifications.map((notif, index) => (
+                                <div key={index} onClick={() => handleSetAsRead(notif.id, index)} className={`bg-gray-200 rounded-lg p-4 mb-4 flex justify-between items-center gap-5`}>
+                                    <div className={`${notif.read === '1' ? 'text-gray-500' : 'text-black'}`}>
+                                        {notif.read === '1' ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                                            </svg>
+                                        )}
+                                    </div>
+                                    <div className='flex justify-between items-center'>
+                                        <span className={`text-base ${notif.read === '1' ? 'text-gray-500' : 'text-black'}`}>
+                                            {notif.message}
+                                        </span>
+                                        <span className="text-sm text-gray-500">{notif.time}</span> {/* Display time */}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <div className='flex justify-between items-center'>
-                            <span className={`text-base ${notif.read === '1' ? 'text-gray-500' : 'text-black'}`}>
-                                {notif.message}
-                            </span>
-                        </div>
-                    </div>
-                ))}
+                    ))}
                 </div>
             </div>
             {showSuccess && (
