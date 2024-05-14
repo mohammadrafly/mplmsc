@@ -51,10 +51,10 @@ export default function Login() {
                 </div>
             )}
             <div className='animate-slide-bottom-to-top w-full mx-5 text-[#043474]'>
-                <div className=''>
-                    <h1 className='font-bold text-4xl'>MPLMSC</h1>
-                </div>
                 <form onSubmit={handleSubmit} className='py-10'>
+                    <div className='flex justify-center items-center'>
+                        <img src='/images/logo_mplmsc.png' alt='Logo' className='font-bold w-64 h-32' />
+                    </div>
                     <p className='font-bold'>Login with Your Email or NIM</p>
                     <div className='py-1'>
                         <div className='mt-2'>
