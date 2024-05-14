@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -15,7 +16,8 @@ class ProfileController extends Controller
     {
         return Inertia::render('Dashboard/Profile/Profile', [
             'title' => 'Profile',
-            'data' => User::find(Auth::user()->id)
+            'data' => User::find(Auth::user()->id),
+            'urlFoto' => route('foto_user', Auth::user()->foto),
         ]);
     }
 
@@ -24,7 +26,20 @@ class ProfileController extends Controller
         if ($request->isMethod('POST')) {
             $user = User::find(Auth::user()->id);
 
-            $user->update($request->only('name', 'email', 'foto'));
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+
+                $randomName = Str::random(10) . '.' . $photo->getClientOriginalExtension();
+
+                $photo->storeAs('profile_photos', $randomName, 'public');
+
+                $user->foto = $randomName;
+            }
+    
+            $user->update([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+            ]);
 
             return response()->json([
                 'message' => 'Berhasil update profile', 
@@ -34,7 +49,9 @@ class ProfileController extends Controller
 
         return Inertia::render('Dashboard/Profile/UpdateProfile', [
             'title' => 'Update Profile',
-            'data' => User::find(Auth::user()->id)
+            'data' => User::find(Auth::user()->id),
+            'urlFoto' => route('foto_user', Auth::user()->foto),
+            'role' => Auth::user()->usertype,
         ]);
     }
 

@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('list_pj', function (Blueprint $table) {
+            $table->id();
+            $table->string('id_jadwal');
+            $table->string('id_mahasiswa');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('list_pj');
     }
 };

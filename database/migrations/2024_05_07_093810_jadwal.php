@@ -11,7 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('jadwal', function (Blueprint $table) {
+            $table->id();
+            $table->string('tahun');
+            $table->string('nama_jadwal');
+            $table->string('jadwal');
+            $table->string('hari');
+            $table->string('jam');
+            $table->string('sks');
+            $table->string('kode_seksi');
+            $table->string('kode_matkul');
+            $table->string('dosen');
+            $table->enum('koneksi', ['online', 'offline']);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('jadwal');
     }
 };

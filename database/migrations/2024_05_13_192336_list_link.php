@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifikasi', function (Blueprint $table) {
+        Schema::create('list_link', function (Blueprint $table) {
             $table->id();
             $table->string('id_jadwal');
-            $table->string('id_user');
-            $table->enum('read', [true, false]);
+            $table->string('link');
+            $table->enum('type', ['bukti_perkuliahan', 'absensi', 'form_pj', 'form_5_6', 'record_perkuliahan']);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifikasi');
+        Schema::dropIfExists('list_link');
     }
 };

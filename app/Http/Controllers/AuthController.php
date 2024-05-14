@@ -12,39 +12,47 @@ class AuthController extends Controller
 {
     public function Login(Request $request)
     {
-        if ($request->isMethod('POST')) {
-            $credentials = $request->only('email', 'password');
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
 
-            $user = User::where('email', $credentials['email'])->first();
-    
+        if ($request->isMethod('POST')) {
+            $credentialField = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'nim';
+            $credentials = [
+                $credentialField => $request->input('username'),
+                'password' => $request->input('password'),
+            ];
+
+            $user = User::where($credentialField, $credentials[$credentialField])->first();
+
             if (!$user) {
                 return response()->json([
-                    'message' => 'Email tidak ada di database!', 
+                    'message' => 'Email atau NIM tidak ada di database!', 
                     'code' => 404
                 ]);
             }
-    
+
             if (!Hash::check($credentials['password'], $user->password)) {
                 return response()->json([
                     'message' => 'Password salah!', 
                     'code' => 404
                 ]);
             }
-    
-            if (!Auth::attempt($credentials)) {
+
+            if (Auth::attempt($credentials, $request->filled('remember'))) {
                 return response()->json([
-                    'message' => 'Gagal login!', 
-                    'code' => 404
-                ]);
+                    'message' => 'Berhasil login', 
+                    'code' => 200, 
+                    'redirect' => route('dashboard')
+                ]);  
             }
-    
+
             return response()->json([
-                'message' => 'Berhasil login', 
-                'code' => 200, 
-                'redirect' => route('dashboard')
-            ]);    
+                'message' => 'Gagal login!', 
+                'code' => 404
+            ]);
         }
-        
+
         return Inertia::render('Authentication/Login');
     }
 

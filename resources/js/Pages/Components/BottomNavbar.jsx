@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function BottomNavbar({ url }) {
     return (
-        <div className='w-full fixed bottom-0 h-[75px] bg-[#043474] mt-32'>
+        <div className='w-full fixed bottom-0 h-[75px] bg-[#043474]'>
             <div className='flex text-white justify-between items-center h-full px-10'>
                 <Link href="/dashboard">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${url === 'dashboard' ? 'text-yellow-500 w-7 h-7' : ''}`}>

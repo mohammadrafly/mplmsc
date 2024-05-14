@@ -18,6 +18,8 @@ class User extends Seeder
             [
                 'name' => 'Dosen',
                 'email' => 'dosen@gmail.com',
+                'nim' => null,
+                'angkatan' => null,
                 'password' => Hash::make('dosen'),
                 'usertype' => 'dosen',
                 'foto' => '',
@@ -26,7 +28,9 @@ class User extends Seeder
             ],
             [
                 'name' => 'Mahasiswa',
-                'email' => 'mahasiswa@gmail.com',
+                'email' => null,
+                'nim' => '1234567',
+                'angkatan' => '2021',
                 'password' => Hash::make('mahasiswa'),
                 'usertype' => 'mahasiswa',
                 'foto' => '',

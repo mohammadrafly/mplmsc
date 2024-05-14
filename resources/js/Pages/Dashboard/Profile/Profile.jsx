@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router } from '@inertiajs/react';
 import Layout from '../../Layout';
 
-export default function Profile({ title, data }) {
+export default function Profile({ title, data, urlFoto }) {
     const [showPopup, setShowPopup] = useState(false);
     const [csrf, setCsrf] = useState('');
 
@@ -37,12 +37,12 @@ export default function Profile({ title, data }) {
 
     return (
         <Layout>
-            <div className='p-10 text-[#043474]'>
+            <div className='p-10 text-[#043474] animate-slide-bottom-to-top'>
                 <h1 className='font-bold text-3xl text-[#043474]'>{title}</h1>
                 <div className='mt-5 text-[#043474]'>
                     <div className='flex justify-center items-center'>
-                        <div className='w-[100px] h-[100px] rounded-full bg-white border-4 border-gray-800'>
-                            <img src="" alt="" />
+                        <div className='w-[100px] h-[100px] rounded-full bg-white shadow-xl'>
+                            <img src={urlFoto} alt="Profile" className="w-full h-full object-cover rounded-full" />
                         </div>
                     </div>
                     {data.usertype === 'dosen' && (
@@ -111,7 +111,7 @@ export default function Profile({ title, data }) {
                 </Link>
                 {showPopup && (
                     <div className="fixed bottom-0 left-0 w-full bg-gray-900 bg-opacity-75 flex justify-center items-center h-screen">
-                        <div className="bg-white rounded-lg p-8">
+                        <div className="bg-white rounded-lg p-8 animate-slide-bottom-to-top">
                             <p className="text-lg font-semibold mb-4">Are you sure you want to logout?</p>
                             <div className="flex justify-center">
                                 <button onClick={handleLogout} className="bg-red-500 text-white rounded-md px-4 py-2 mr-4">Yes</button>
