@@ -1,6 +1,5 @@
 import React from 'react';
 import BottomNavbar from '../Pages/Components/BottomNavbar';
-import '../Styles.css'; 
 
 export default function Layout({ children, title }) {
   const currentPathname = window.location.pathname;
