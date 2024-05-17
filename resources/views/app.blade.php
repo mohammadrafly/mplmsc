@@ -5,7 +5,7 @@
         <meta name="csrf" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <title>{{ config('app.name') }}</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.jsx'])
         @inertiaHead
     </head>
     <body>
